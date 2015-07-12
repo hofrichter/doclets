@@ -1,0 +1,146 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>net.hofrichter.javamag</groupId>
+	<artifactId>javadoc</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>JavaDoc</name>
+	<description>This project shows, how to extend javadoc by publishing new features</description>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!--java.home>C:/win32app/Java/jdk1.6.0_24</java.home -->
+		<java.version>1.6.0</java.version>
+	</properties>
+	<profiles>
+		<profile>
+			<id>default-tools.jar</id>
+			<activation>
+				<property>
+					<name>java.vendor</name>
+					<!-- before Java 7: Sun Microsystems Inc. -->
+					<!-- Java 7ff: Oracle Corporation -->
+					<value>Sun Microsystems Inc.</value>
+				</property>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>com.sun</groupId>
+					<artifactId>tools</artifactId>
+					<version>${java.version}</version>
+					<scope>system</scope>
+					<systemPath>${env.JAVA_HOME}/lib/tools.jar</systemPath>
+				</dependency>
+			</dependencies>
+		</profile>
+
+		<profile>
+			<!-- Dieses Profil wird wie folgt angesprochen: mvn clean install -P JavaMagazin -->
+			<id>JavaMagazin</id>
+			<dependencies>
+				<dependency>
+					<groupId>com.sun</groupId>
+					<artifactId>tools</artifactId>
+					<version>${java.version}</version>
+					<scope>system</scope>
+					<systemPath>${env.JAVA_HOME}/lib/tools.jar</systemPath>
+				</dependency>
+			</dependencies>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>attach-javadocs</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+	</profiles>
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>2.6</version>
+					<configuration>
+						<includes>
+							<include>**/*</include>
+						</includes>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.1</version>
+					<configuration>
+						<source>1.7</source>
+						<target>1.7</target>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>2.10.3</version>
+					<configuration>
+						<doclet>net.hofrichter.javamag.javadoc.doclets.BaseDoclet</doclet>
+						<!-- <docletPath>/path/to/our-doclet.jar</docletPath> -->
+						<docletArtifact>
+							<groupId>net.hofrichter.javamag</groupId>
+							<artifactId>javadoc</artifactId>
+							<version>0.0.1-SNAPSHOT</version>
+						</docletArtifact>
+						<!-- useStandardDocletOptions>false</useStandardDocletOptions -->
+						<taglets>
+							<taglet>
+								<tagletClass>net.hofrichter.javamag.javadoc.taglets.AuthorTaglet</tagletClass>
+							</taglet>
+							<taglet>
+								<tagletClass>net.hofrichter.javamag.javadoc.taglets.NotizTaglet</tagletClass>
+							</taglet>
+						</taglets>
+						<tagletArtifact>
+							<groupId>net.hofrichter.javamag</groupId>
+							<artifactId>javadoc</artifactId>
+							<version>0.0.1-SNAPSHOT</version>
+						</tagletArtifact>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.12.4</version>
+					<configuration>
+						<!-- Hierdurch ist es möglich, Tests debuggen zu können. -->
+						<forkMode>never</forkMode>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+	<dependencies>
+		<!-- Diese Abhängigkeit ist nicht erforderlich, wenn man entwickelt, allerdings 
+			sinnvoll, möchte man aus der IDE heraus auf die Sourcen zugreifen -->
+		<dependency>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-javadoc-plugin</artifactId>
+			<version>2.10.3</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>

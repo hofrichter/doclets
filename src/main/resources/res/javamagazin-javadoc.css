@@ -1,0 +1,51 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+#javadoc-tree ul { list-style-type:none; padding:0; margin:0; }
+#javadoc-tree ul li { color: #000; margin-left:10px; }
+#javadoc-tree ul li:before { content: "\25B9 \0020"; } /*\25B8*/
+#javadoc-tree ul li.found:before { content: "\25B8 \0020"; } /*25BE*/
+#javadoc-tree ul span { cursor:pointer; }
+#javadoc-tree ul span.clicked {
+    color: #800;
+    text-shadow: 0px 0px 1px #000000;
+    user-select: none;
+}
+#javadoc-tree ul span>mark {
+    background: #DEDEDE;
+    border: 1px dotted #CDCDCD;
+    border-radius: 3px;
+    padding: 0;
+    box-shadow: 0px 0px 2px #000;
+}
+#javadoc-tree .search {
+    min-width: 100%;
+    white-space: nowrap;
+}
+::-webkit-input-placeholder { color: #999999; }
+:-moz-placeholder { color: #999999;  } /* Firefox 18- */
+::-moz-placeholder { color: #999999; }  /* Firefox 19+ */
+:-ms-input-placeholder { color: #999999; }
+
+.panel .list-group {
+    margin-left: 15px;
+}
+/* method name and modifiers (headline) */
+.panel .panel-heading .modifier { color:#004; font-style: italic; }
+.panel .panel-heading .name {font-weight:bold; }
+.panel .panel-heading .annotion { }
+/* @return */
+.panel .panel-heading .return { color: #800; }
+.panel .panel-body ul.return li strong { color: #800; }
+/* @param */
+.panel .panel-heading .param { }
+.panel .panel-body ul.param li strong { }
+/* annotations */
+.panel .panel-heading .annotion { }
+.panel .panel-body ul.annotion li strong { }
+
+.inheritDoc { font-style: italic; }
+.inheritDoc:before { content: "Original-Kommentar: "; }
+
