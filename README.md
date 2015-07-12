@@ -4,4 +4,4 @@ Just start it like this:
 ```
 mvn clean install -P JavaMagazin
 ```
-The tests are still not representative ones ;-)
+The tests are still not representative ;-)
